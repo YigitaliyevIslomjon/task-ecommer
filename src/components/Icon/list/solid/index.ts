@@ -1,0 +1,11 @@
+export { default as CheckRectangle } from './CheckRectangle';
+export { default as DocumentText } from './DocumentText';
+export { default as HelpCircle } from './HelpCircle';
+export { default as Home } from './Home';
+export { default as Login } from './Login';
+export { default as Logout } from './Logout';
+export { default as MoreHorizontal } from './MoreHorizontal';
+export { default as PlusThin } from './PlusThin';
+export { default as PostAdd } from './PostAdd';
+export { default as Presentation } from './Presentation';
+export { default as Setting } from './Setting';
