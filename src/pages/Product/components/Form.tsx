@@ -10,10 +10,10 @@ const Form: React.FC<IProps> = () => {
     <>
       <Row gutter={[12, 12]}>
         <Col span={12}>
-          <Fields.Text name="firstName" title="firstName" placeholder="firstName" size="sm" />
+          <Fields.Text name="title" title="title" placeholder="title" size="sm" />
         </Col>
         <Col span={12}>
-          <Fields.Text name="lastName" title="lastName" placeholder="lastName" size="sm" />
+          <Fields.Text name="category" title="category" placeholder="category" size="sm" />
         </Col>
       </Row>
     </>

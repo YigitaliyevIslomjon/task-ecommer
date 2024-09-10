@@ -5,8 +5,8 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
-import { useList } from '@/modules/user/hooks';
-import useDelete from '@/modules/user/hooks/useDelete';
+import { useList } from '@/modules/todo/hooks';
+import useDelete from '@/modules/todo/hooks/useDelete';
 
 import { GenericTable } from '@/containers/Table';
 
@@ -14,16 +14,16 @@ import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
 import Spacer from '@/components/Spacer';
 
-import UserCreateModal from './components/CreateModal';
-import UserUpdateModal from './components/UpdateModal';
+import TodoCreateModal from './components/CreateModal';
+import TodoUpdateModal from './components/UpdateModal';
 
 import classes from './TodoPage.module.scss';
 
 interface IProps {}
 
 const List: React.FC<IProps> = () => {
-  const [userCreateModal, setUserCreateModal] = useState(false);
-  const [userUpdateModal, setUserUpdateModal] = useState(false);
+  const [todoCreateModal, setTodoCreateModal] = useState(false);
+  const [todoUpdateModal, setTodoUpdateModal] = useState(false);
   const [id, setId] = useState('');
 
   const [query, setQuery] = useQueryParams({
@@ -43,9 +43,7 @@ const List: React.FC<IProps> = () => {
       limit: query.limit,
       order: query.order,
       sortBy: query.sortBy,
-      q: query.q,
-      key: query.key,
-      value: query.value
+      q: query.q
     }
   });
 
@@ -71,67 +69,23 @@ const List: React.FC<IProps> = () => {
   );
 
   interface DataType {
-    firstName: string;
-    age: number;
+    todo: string;
+    completed: boolean;
     id: string;
-    eyeColor: string;
+    todoId: string;
   }
 
   const columns: TableProps<DataType>['columns'] = [
     {
-      title: 'Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
-      filters: [
-        {
-          text: 'Michael',
-          value: 'Michael'
-        }
-      ],
-      onFilter: (value, _) => {
-        console.log(value, 'f');
-        setQuery({
-          key: 'firstName',
-          value: value as string
-        });
-        return true;
-      }
+      title: 'todo',
+      dataIndex: 'todo',
+      key: 'todo'
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      filters: [
-        {
-          text: '24',
-          value: '24'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'age',
-          value: value as string
-        });
-        return true;
-      }
-    },
-    {
-      title: 'eyeColor',
-      dataIndex: 'eyeColor',
-      key: 'eyeColor',
-      filters: [
-        {
-          text: 'Red',
-          value: 'Red'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'eyeColor',
-          value: value as string
-        });
-        return true;
-      }
+      title: 'completed',
+      dataIndex: 'completed',
+      key: 'completed',
+      render: value => String(value)
     },
     {
       title: 'Action',
@@ -142,7 +96,7 @@ const List: React.FC<IProps> = () => {
             className={classes.icon}
             onClick={() => {
               setId(record.id);
-              setUserUpdateModal(true);
+              setTodoUpdateModal(true);
             }}
           />
           <Popconfirm
@@ -169,7 +123,7 @@ const List: React.FC<IProps> = () => {
     <>
       <Header
         onClick={() => {
-          setUserCreateModal(true);
+          setTodoCreateModal(true);
         }}
         onSearch={value => {
           handleSearch(value);
@@ -189,18 +143,18 @@ const List: React.FC<IProps> = () => {
         defaultPageSize={query.limit || 10}
         total={100}
       />
-      <UserCreateModal
-        isOpen={userCreateModal}
+      <TodoCreateModal
+        isOpen={todoCreateModal}
         onClose={() => {
-          setUserCreateModal(false);
+          setTodoCreateModal(false);
         }}
       />
-      {userUpdateModal && (
-        <UserUpdateModal
+      {todoUpdateModal && (
+        <TodoUpdateModal
           id={id}
-          isOpen={userUpdateModal}
+          isOpen={todoUpdateModal}
           onClose={() => {
-            setUserUpdateModal(false);
+            setTodoUpdateModal(false);
           }}
         />
       )}

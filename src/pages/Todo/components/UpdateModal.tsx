@@ -3,8 +3,8 @@ import { Button, message, Modal } from 'antd';
 import { Col, Row } from 'antd/lib';
 import Spinner from 'antd/lib/spin';
 
-import { UpdateForm } from '@/modules/user/forms';
-import useSingle from '@/modules/user/hooks/useSingle';
+import { UpdateForm } from '@/modules/todo/forms';
+import useSingle from '@/modules/todo/hooks/useSingle';
 
 import Spacer from '@/components/Spacer';
 
@@ -21,7 +21,7 @@ const UpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
 
   return (
     <>
-      <Modal width={1000} title="Update User" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
+      <Modal width={1000} title="Update todo" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
         {!isFetched ? (
           <Spinner spinning={!isFetched} />
         ) : (
@@ -31,7 +31,7 @@ const UpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
               id={id}
               values={item}
               onSuccess={() => {
-                message.success('user muvoffaqiyatli updated');
+                message.success('todo muvoffaqiyatli updated');
                 onClose();
               }}
             >

@@ -3,7 +3,7 @@ import { Button, message, Modal } from 'antd';
 import { Col, Row } from 'antd/lib';
 import Spinner from 'antd/lib/spin';
 
-import { CreateForm } from '@/modules/user/forms';
+import { CreateForm } from '@/modules/product/forms';
 
 import Spacer from '@/components/Spacer';
 
@@ -17,12 +17,12 @@ interface IProps {
 const CreateModal: React.FC<IProps> = ({ onClose, isOpen }) => {
   return (
     <>
-      <Modal width={1000} title="Create User" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
+      <Modal width={1000} title="Create product" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
         <>
           <Spacer size={24} />
           <CreateForm
             onSuccess={() => {
-              message.success('user muvoffaqiyatli yaratildi');
+              message.success('product muvoffaqiyatli yaratildi');
               onClose();
             }}
           >

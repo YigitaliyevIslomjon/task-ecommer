@@ -10,6 +10,7 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 
 import { UploadRectangle } from '@/components/Icon/list/outline';
+import Spacer from '@/components/Spacer';
 
 import styles from './MainLayout.module.scss';
 
@@ -26,7 +27,7 @@ const Main: React.FC = () => {
     <div className={styles.wrapper}>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="demo-logo-vertical" />
+          <Spacer size={85} />
           <Menu
             theme="dark"
             mode="inline"
