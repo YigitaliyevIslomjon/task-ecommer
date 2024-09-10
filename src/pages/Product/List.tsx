@@ -7,6 +7,7 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 
 import { useList } from '@/modules/product/hooks';
 import useDelete from '@/modules/product/hooks/useDelete';
+import * as Types from '@/modules/product/types';
 
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
@@ -67,14 +68,7 @@ const List: React.FC<IProps> = () => {
     []
   );
 
-  interface DataType {
-    title: string;
-    category: string;
-    id: string;
-    price: string;
-  }
-
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<Types.IEntity.Product>['columns'] = [
     {
       title: 'title',
       dataIndex: 'title',

@@ -2,7 +2,7 @@ import { get } from 'radash';
 
 import type * as Types from './types';
 
-export const Post = (item?): Types.IEntity.Post => ({
+export const Post = (item?: any): Types.IEntity.Post => ({
   id: get(item, 'id') || '',
   title: get(item, 'title') || '',
   body: get(item, 'body') || '',
@@ -15,7 +15,7 @@ export const Post = (item?): Types.IEntity.Post => ({
   userId: get(item, 'userId') || 0
 });
 
-export const Meta = (item?): Types.IEntity.Meta => ({
+export const Meta = (item?: any): Types.IEntity.Meta => ({
   total: get(item, 'total') || 0,
   skip: get(item, 'skip') || 1,
   limit: get(item, 'limit')

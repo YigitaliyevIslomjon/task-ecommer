@@ -2,8 +2,8 @@ import { get } from 'radash';
 
 import type * as Types from './types';
 
-export const Product = (item?): Types.IEntity.Product => ({
-  id: get(item, 'id', 0),
+export const Product = (item?: any): Types.IEntity.Product => ({
+  id: get(item, 'id', ''),
   title: get(item, 'title', ''),
   description: get(item, 'description', ''),
   category: get(item, 'category', ''),
@@ -17,7 +17,7 @@ export const Product = (item?): Types.IEntity.Product => ({
   weight: get(item, 'weight', 0)
 });
 
-export const Meta = (item?): Types.IEntity.Meta => ({
+export const Meta = (item?: any): Types.IEntity.Meta => ({
   total: get(item, 'total') || 0,
   skip: get(item, 'skip') || 1,
   limit: get(item, 'limit')

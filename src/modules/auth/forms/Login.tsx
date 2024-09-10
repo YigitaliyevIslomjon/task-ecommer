@@ -24,16 +24,15 @@ interface IChildren extends UseFormReturn<FormValues> {}
 interface IProps {
   children: (props: IChildren) => React.ReactNode;
   className?: string;
-  onError?: (error: string) => void;
   onSettled?: () => void;
   onSuccess?: (value: Types.IEntity.Profile) => void;
 }
 
-const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
+const LoginForm: React.FC<IProps> = ({ children, onSettled, onSuccess, className }) => {
   const { methods } = useContext();
   const navigate = useNavigate();
 
-  const mutation = useMutation<Types.IEntity.Profile, string, FormValues, any>(
+  const mutation = useMutation<Types.IEntity.Profile, any, FormValues, any>(
     async values => {
       const { data } = await Api.Login(values);
       return Mappers.Profile(data);

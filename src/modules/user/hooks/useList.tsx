@@ -45,7 +45,10 @@ const useList = ({ params }: IProps = {}) => {
         data = response.data;
       }
 
-      const items = (get(data, 'users') || []).reduce((prev, item) => [...prev, Mappers.User(item)], []);
+      const items = (get(data, 'users') || []).reduce<Types.IEntity.User[]>(
+        (prev, item) => [...prev, Mappers.User(item)],
+        []
+      );
       const meta = Mappers.Meta(get(data, 'meta'));
 
       return {

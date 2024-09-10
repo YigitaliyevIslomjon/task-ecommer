@@ -7,6 +7,7 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 
 import { useList } from '@/modules/post/hooks';
 import useDelete from '@/modules/post/hooks/useDelete';
+import * as Types from '@/modules/post/types';
 
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
@@ -65,14 +66,7 @@ const List: React.FC<IProps> = () => {
     []
   );
 
-  interface DataType {
-    title: string;
-    body: string;
-    id: string;
-    views: string;
-  }
-
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<Types.IEntity.Post>['columns'] = [
     {
       title: 'title',
       dataIndex: 'title',

@@ -38,7 +38,10 @@ const useList = ({ params }: IProps = {}) => {
         data = response.data;
       }
 
-      const items = (get(data, 'todos') || []).reduce((prev, item) => [...prev, Mappers.TODO(item)], []);
+      const items = (get(data, 'todos') || []).reduce<Types.IEntity.Todo[]>(
+        (prev, item) => [...prev, Mappers.TODO(item)],
+        []
+      );
       const meta = Mappers.Meta(get(data, 'meta'));
 
       return {

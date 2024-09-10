@@ -39,7 +39,7 @@ export declare namespace IEntity {
   }
 
   export interface Product {
-    id: number;
+    id: string;
     title: string;
     description: string;
     category: string;

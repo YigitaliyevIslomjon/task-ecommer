@@ -7,12 +7,12 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 
 import { useList } from '@/modules/user/hooks';
 import useDelete from '@/modules/user/hooks/useDelete';
-
-import { GenericTable } from '@/components/Table';
+import * as Types from '@/modules/user/types';
 
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
 import Spacer from '@/components/Spacer';
+import { GenericTable } from '@/components/Table';
 
 import UserCreateModal from './components/CreateModal';
 import UserUpdateModal from './components/UpdateModal';
@@ -70,14 +70,7 @@ const List: React.FC<IProps> = () => {
     []
   );
 
-  interface DataType {
-    firstName: string;
-    age: number;
-    id: string;
-    eyeColor: string;
-  }
-
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<Types.IEntity.User>['columns'] = [
     {
       title: 'Name',
       dataIndex: 'firstName',

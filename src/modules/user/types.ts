@@ -31,6 +31,17 @@ export declare namespace IEntity {
     id: string;
     firstName: string;
     lastName: string;
+    age: number;
+    gender: string;
+    email: string;
+    phone: string;
+    username: string;
+    password: string;
+    image: string;
+    bloodGroup: string;
+    height: number;
+    weight: number;
+    eyeColor: string;
   }
 }
 

@@ -8,10 +8,6 @@ import * as AuthModule from '@/modules/auth';
 import * as Layouts from '@/layouts';
 
 import Auth from '@/pages/Auth';
-import PostPage from '@/pages/Post';
-import ProductPage from '@/pages/Product';
-import TodoPage from '@/pages/Todo';
-import UserPage from '@/pages/User';
 
 const getRoutesData = (): RouteObject[] => [
   {
@@ -40,19 +36,31 @@ const getRoutesData = (): RouteObject[] => [
     children: [
       {
         path: 'user',
-        element: <UserPage />
+        async lazy() {
+          const UserPage = await import('@/pages/User');
+          return { Component: UserPage.default };
+        }
       },
       {
         path: 'post',
-        element: <PostPage />
+        async lazy() {
+          const PostPage = await import('@/pages/Post');
+          return { Component: PostPage.default };
+        }
       },
       {
         path: 'product',
-        element: <ProductPage />
+        async lazy() {
+          const ProductPage = await import('@/pages/Product');
+          return { Component: ProductPage.default };
+        }
       },
       {
         path: 'todos',
-        element: <TodoPage />
+        async lazy() {
+          const TodoPage = await import('@/pages/Todo');
+          return { Component: TodoPage.default };
+        }
       },
       {
         path: '/*',

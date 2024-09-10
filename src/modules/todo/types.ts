@@ -31,7 +31,7 @@ export declare namespace IEntity {
   }
 
   export interface Todo {
-    id: number;
+    id: string;
     todo: string;
     completed: boolean;
     userId: number;

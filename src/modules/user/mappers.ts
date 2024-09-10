@@ -2,7 +2,7 @@ import { get } from 'radash';
 
 import type * as Types from './types';
 
-export const User = (item?): Types.IEntity.User => ({
+export const User = (item?: any): Types.IEntity.User => ({
   id: get(item, 'id') || '',
   firstName: get(item, 'firstName') || '',
   lastName: get(item, 'lastName') || '',
@@ -19,7 +19,7 @@ export const User = (item?): Types.IEntity.User => ({
   eyeColor: get(item, 'eyeColor') || ''
 });
 
-export const Meta = (item?): Types.IEntity.Meta => ({
+export const Meta = (item?: any): Types.IEntity.Meta => ({
   total: get(item, 'total') || 0,
   skip: get(item, 'skip') || 1,
   limit: get(item, 'limit')

@@ -7,6 +7,7 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 
 import { useList } from '@/modules/todo/hooks';
 import useDelete from '@/modules/todo/hooks/useDelete';
+import * as Types from '@/modules/todo/types';
 
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
@@ -67,14 +68,7 @@ const List: React.FC<IProps> = () => {
     []
   );
 
-  interface DataType {
-    todo: string;
-    completed: boolean;
-    id: string;
-    todoId: string;
-  }
-
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<Types.IEntity.Todo>['columns'] = [
     {
       title: 'todo',
       dataIndex: 'todo',
