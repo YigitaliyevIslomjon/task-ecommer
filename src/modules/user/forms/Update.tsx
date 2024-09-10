@@ -1,39 +1,44 @@
 import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { UseFormReturn } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import * as Api from '../api';
-import * as Mappers from '../mappers';
+import * as Api from '../api.ts';
+import * as Mappers from '../mappers.ts';
 import * as Types from '../types';
 
 import { keepOptions } from '@/helpers';
 
-interface FormValues extends Types.IForm.Login {}
+interface FormValues extends Types.IForm.Update {}
 
 interface IChildren extends UseFormReturn<FormValues> {}
 
 interface IProps {
+  id: string;
+  values: Types.IEntity.User;
   children: (props: IChildren) => React.ReactNode;
   className?: string;
   onError?: (error: string) => void;
   onSettled?: () => void;
-  onSuccess?: (value: Types.IEntity.Profile) => void;
+  onSuccess?: (value: Types.IEntity.User) => void;
 }
 
-const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
-  const mutation = useMutation<Types.IEntity.Profile, string, FormValues, any>(
+const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, onSuccess, onError, id }) => {
+  const queryClient = useQueryClient();
+  console.log('values', values, id);
+  const mutation = useMutation<Types.IEntity.User, string, FormValues, any>(
     async values => {
-      console.log(values);
-      const { data } = await Api.Login(values);
-
-      return Mappers.Profile(data);
+      const { data } = await Api.Update({ id, values });
+      return Mappers.User(data);
     },
     {
       onSuccess: data => {
         onSuccess && onSuccess(data);
+        queryClient.invalidateQueries({
+          predicate: query => query.queryKey[0] === 'department' && query.queryKey[1] === 'list'
+        });
       },
       onError,
       onSettled
@@ -42,17 +47,17 @@ const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, 
 
   const validationSchema = yup
     .object({
-      username: yup.string().required(),
-      password: yup.string().required()
+      firstName: yup.string().required(),
+      lastName: yup.string().required()
     })
     .required();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      username: '',
-      password: ''
+      firstName: values.firstName,
+      lastName: values.lastName
     },
-    resolver: yupResolver<FormValues>(validationSchema)
+    resolver: yupResolver<any>(validationSchema)
   });
 
   const onSubmit = form.handleSubmit(values => {
@@ -70,4 +75,4 @@ const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, 
   );
 };
 
-export default LoginForm;
+export default UpdateForm;

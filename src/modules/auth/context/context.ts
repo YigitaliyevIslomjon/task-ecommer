@@ -4,13 +4,14 @@ import config from '@/config';
 
 import { storage } from '@/common/services';
 
-import * as Mappers from '../mappers';
 import * as Types from '../types';
 
 export const initialState: Types.IContext.State = {
   isAuthenticated: !!storage.local.get(config.api.accessTokenKey),
   isFetched: false,
-  profile: Mappers.Profile(),
+  profile: {
+    id: '1'
+  },
   theme: storage.local.get('theme') || 'light',
   tokens: {
     accessToken: storage.local.get(config.api.accessTokenKey) || '',

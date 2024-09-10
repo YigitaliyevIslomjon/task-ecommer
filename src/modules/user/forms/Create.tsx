@@ -11,7 +11,7 @@ import * as Types from '../types';
 
 import { keepOptions } from '@/helpers';
 
-interface FormValues extends Types.IForm.Login {}
+interface FormValues extends Types.IForm.Create {}
 
 interface IChildren extends UseFormReturn<FormValues> {}
 
@@ -23,13 +23,12 @@ interface IProps {
   onSuccess?: (value: Types.IEntity.Profile) => void;
 }
 
-const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
+const CreateForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
   const mutation = useMutation<Types.IEntity.Profile, string, FormValues, any>(
     async values => {
-      console.log(values);
-      const { data } = await Api.Login(values);
+      const { data } = await Api.Create({ values });
 
-      return Mappers.Profile(data);
+      return Mappers.Profile(data?.data);
     },
     {
       onSuccess: data => {
@@ -42,15 +41,15 @@ const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, 
 
   const validationSchema = yup
     .object({
-      username: yup.string().required(),
-      password: yup.string().required()
+      firstName: yup.string().required(),
+      lastName: yup.string().required()
     })
     .required();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      username: '',
-      password: ''
+      firstName: '',
+      lastName: ''
     },
     resolver: yupResolver<FormValues>(validationSchema)
   });
@@ -70,4 +69,4 @@ const LoginForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, 
   );
 };
 
-export default LoginForm;
+export default CreateForm;

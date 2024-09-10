@@ -24,27 +24,7 @@ export declare namespace IApi {
   export namespace Profile {
     export interface Request {}
 
-    export interface Response {
-      avatar: null | string;
-      firstname: null | string;
-      id: number;
-      permission_group_id: number;
-      phone: string;
-      role: Role;
-      status: number;
-      surname: null | string;
-      username: string;
-    }
-  }
-
-  export namespace ClientInfo {
-    export interface Request {
-      redirectUrl: string;
-    }
-
-    export interface Response {
-      url: string;
-    }
+    export interface Response {}
   }
 
   export interface Role {
