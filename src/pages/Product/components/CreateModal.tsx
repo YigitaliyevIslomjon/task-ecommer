@@ -9,18 +9,16 @@ import Spacer from '@/components/Spacer';
 
 import Form from './Form';
 
-import classes from './UserCreateModal.module.scss';
-
 interface IProps {
   onClose: () => void;
   isOpen: boolean;
 }
 
-const UserCreateModal: React.FC<IProps> = ({ onClose, isOpen }) => {
+const CreateModal: React.FC<IProps> = ({ onClose, isOpen }) => {
   return (
     <>
       <Modal width={1000} title="Create User" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
-        <div className={classes.wrapper}>
+        <>
           <Spacer size={24} />
           <CreateForm
             onSuccess={() => {
@@ -30,7 +28,7 @@ const UserCreateModal: React.FC<IProps> = ({ onClose, isOpen }) => {
           >
             {({ formState }) => {
               return (
-                <div className={classes.content}>
+                <div>
                   <Spinner spinning={formState.isSubmitSuccessful}>
                     <Form />
                     <Spacer size={30} />
@@ -49,10 +47,10 @@ const UserCreateModal: React.FC<IProps> = ({ onClose, isOpen }) => {
               );
             }}
           </CreateForm>
-        </div>
+        </>
       </Modal>
     </>
   );
 };
 
-export default UserCreateModal;
+export default CreateModal;

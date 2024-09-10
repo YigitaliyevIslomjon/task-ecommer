@@ -1,15 +1,14 @@
 import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { UseFormReturn } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import * as Api from '../api';
+import { LIST } from '../constants';
 import * as Mappers from '../mappers';
 import * as Types from '../types';
-
-import { keepOptions } from '@/helpers';
 
 interface FormValues extends Types.IForm.Create {}
 
@@ -20,19 +19,24 @@ interface IProps {
   className?: string;
   onError?: (error: string) => void;
   onSettled?: () => void;
-  onSuccess?: (value: Types.IEntity.Profile) => void;
+  onSuccess?: (value: Types.IEntity.User) => void;
 }
 
 const CreateForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
-  const mutation = useMutation<Types.IEntity.Profile, string, FormValues, any>(
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation<Types.IEntity.User, string, FormValues, any>(
     async values => {
       const { data } = await Api.Create({ values });
 
-      return Mappers.Profile(data?.data);
+      return Mappers.User(data);
     },
     {
       onSuccess: data => {
         onSuccess && onSuccess(data);
+        queryClient.invalidateQueries({
+          predicate: query => query.queryKey[0] === LIST
+        });
       },
       onError,
       onSettled
@@ -56,7 +60,7 @@ const CreateForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess,
 
   const onSubmit = form.handleSubmit(values => {
     mutation.mutate(values, {
-      onSettled: () => form.reset({ ...form.getValues() }, { ...keepOptions })
+      onSettled: () => form.reset()
     });
   });
 

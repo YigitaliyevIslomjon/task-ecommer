@@ -1,6 +1,6 @@
 export declare namespace IApi {
   export namespace List {
-    export type Response = User[];
+    export type Response = Post[];
 
     export interface Params {
       skip?: number;
@@ -8,8 +8,6 @@ export declare namespace IApi {
       sortBy?: string;
       order?: string;
       q?: string;
-      key?: string;
-      value?: string | number;
     }
   }
 
@@ -17,31 +15,50 @@ export declare namespace IApi {
     export interface Response {}
   }
 
-  export interface User {}
+  export interface Post {
+    id: string;
+    title: string;
+    body: string;
+    tags: string[];
+    reactions: {
+      likes: number;
+      dislikes: number;
+    };
+    views: number;
+    userId: number;
+  }
 }
 
 export declare namespace IEntity {
+
   export interface Meta {
     total: number;
     skip: number;
     limit: number;
   }
 
-  export interface User {
+  export interface Post {
     id: string;
-    firstName: string;
-    lastName: string;
+    title: string;
+    body: string;
+    tags: string[];
+    reactions: {
+      likes: number;
+      dislikes: number;
+    };
+    views: number;
+    userId: number;
   }
 }
 
 export declare namespace IQuery {
   export interface List {
-    items: IEntity.User[];
+    items: IEntity.Post[];
     meta: IEntity.Meta;
   }
 
   export interface Single {
-    item: IEntity.User;
+    item: IEntity.Post;
   }
 
   export interface Delete {
@@ -51,12 +68,12 @@ export declare namespace IQuery {
 
 export declare namespace IForm {
   export interface Create {
-    firstName: string;
-    lastName: string;
+    body: string;
+    title: string;
   }
 
   export interface Update {
-    firstName: string;
-    lastName: string;
+    body: string;
+    title: string;
   }
 }

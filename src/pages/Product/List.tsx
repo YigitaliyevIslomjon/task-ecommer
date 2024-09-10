@@ -17,7 +17,7 @@ import Spacer from '@/components/Spacer';
 import UserCreateModal from './components/CreateModal';
 import UserUpdateModal from './components/UpdateModal';
 
-import classes from './UserPage.module.scss';
+import classes from './ProductPage.module.scss';
 
 interface IProps {}
 

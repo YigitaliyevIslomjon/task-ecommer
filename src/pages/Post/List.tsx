@@ -5,8 +5,8 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
-import { useList } from '@/modules/user/hooks';
-import useDelete from '@/modules/user/hooks/useDelete';
+import { useList } from '@/modules/post/hooks';
+import useDelete from '@/modules/post/hooks/useDelete';
 
 import { GenericTable } from '@/containers/Table';
 
@@ -14,16 +14,16 @@ import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
 import Spacer from '@/components/Spacer';
 
-import UserCreateModal from './components/CreateModal';
-import UserUpdateModal from './components/UpdateModal';
+import PostCreateModal from './components/CreateModal';
+import PostUpdateModal from './components/UpdateModal';
 
-import classes from './UserPage.module.scss';
+import classes from './PostPage.module.scss';
 
 interface IProps {}
 
 const List: React.FC<IProps> = () => {
-  const [userCreateModal, setUserCreateModal] = useState(false);
-  const [userUpdateModal, setUserUpdateModal] = useState(false);
+  const [postCreateModal, setPostCreateModal] = useState(false);
+  const [postUpdateModal, setPostUpdateModal] = useState(false);
   const [id, setId] = useState('');
 
   const [query, setQuery] = useQueryParams({
@@ -31,9 +31,7 @@ const List: React.FC<IProps> = () => {
     limit: withDefault(NumberParam, undefined),
     order: withDefault(StringParam, undefined),
     sortBy: withDefault(StringParam || NumberParam, undefined),
-    q: withDefault(StringParam, undefined),
-    key: withDefault(StringParam, undefined),
-    value: withDefault(StringParam || NumberParam, undefined)
+    q: withDefault(StringParam, undefined)
   });
 
   const { mutate } = useDelete();
@@ -43,9 +41,7 @@ const List: React.FC<IProps> = () => {
       limit: query.limit,
       order: query.order,
       sortBy: query.sortBy,
-      q: query.q,
-      key: query.key,
-      value: query.value
+      q: query.q
     }
   });
 
@@ -71,67 +67,27 @@ const List: React.FC<IProps> = () => {
   );
 
   interface DataType {
-    firstName: string;
-    age: number;
+    title: string;
+    body: string;
     id: string;
-    eyeColor: string;
+    views: string;
   }
 
   const columns: TableProps<DataType>['columns'] = [
     {
-      title: 'Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
-      filters: [
-        {
-          text: 'Michael',
-          value: 'Michael'
-        }
-      ],
-      onFilter: (value, _) => {
-        console.log(value, 'f');
-        setQuery({
-          key: 'firstName',
-          value: value as string
-        });
-        return true;
-      }
+      title: 'title',
+      dataIndex: 'title',
+      key: 'title'
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      filters: [
-        {
-          text: '24',
-          value: '24'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'age',
-          value: value as string
-        });
-        return true;
-      }
+      title: 'body',
+      dataIndex: 'body',
+      key: 'body'
     },
     {
-      title: 'eyeColor',
-      dataIndex: 'eyeColor',
-      key: 'eyeColor',
-      filters: [
-        {
-          text: 'Red',
-          value: 'Red'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'eyeColor',
-          value: value as string
-        });
-        return true;
-      }
+      title: 'views',
+      dataIndex: 'views',
+      key: 'views'
     },
     {
       title: 'Action',
@@ -142,7 +98,7 @@ const List: React.FC<IProps> = () => {
             className={classes.icon}
             onClick={() => {
               setId(record.id);
-              setUserUpdateModal(true);
+              setPostUpdateModal(true);
             }}
           />
           <Popconfirm
@@ -169,7 +125,7 @@ const List: React.FC<IProps> = () => {
     <>
       <Header
         onClick={() => {
-          setUserCreateModal(true);
+          setPostCreateModal(true);
         }}
         onSearch={value => {
           handleSearch(value);
@@ -189,18 +145,18 @@ const List: React.FC<IProps> = () => {
         defaultPageSize={query.limit || 10}
         total={100}
       />
-      <UserCreateModal
-        isOpen={userCreateModal}
+      <PostCreateModal
+        isOpen={postCreateModal}
         onClose={() => {
-          setUserCreateModal(false);
+          setPostCreateModal(false);
         }}
       />
-      {userUpdateModal && (
-        <UserUpdateModal
+      {postUpdateModal && (
+        <PostUpdateModal
           id={id}
-          isOpen={userUpdateModal}
+          isOpen={postUpdateModal}
           onClose={() => {
-            setUserUpdateModal(false);
+            setPostUpdateModal(false);
           }}
         />
       )}

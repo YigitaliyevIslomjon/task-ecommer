@@ -16,20 +16,20 @@ interface IChildren extends UseFormReturn<FormValues> {}
 
 interface IProps {
   id: string;
-  values: Types.IEntity.User;
+  values: Types.IEntity.Post;
   children: (props: IChildren) => React.ReactNode;
   className?: string;
   onError?: (error: string) => void;
   onSettled?: () => void;
-  onSuccess?: (value: Types.IEntity.User) => void;
+  onSuccess?: (value: Types.IEntity.Post) => void;
 }
 
 const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, onSuccess, onError, id }) => {
   const queryClient = useQueryClient();
-  const mutation = useMutation<Types.IEntity.User, string, FormValues, any>(
+  const mutation = useMutation<Types.IEntity.Post, string, FormValues, any>(
     async values => {
       const { data } = await Api.Update({ id, values });
-      return Mappers.User(data);
+      return Mappers.Post(data);
     },
     {
       onSuccess: data => {
@@ -45,15 +45,15 @@ const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, 
 
   const validationSchema = yup
     .object({
-      firstName: yup.string().required(),
-      lastName: yup.string().required()
+      title: yup.string().required(),
+      body: yup.string().required()
     })
     .required();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      firstName: values.firstName,
-      lastName: values.lastName
+      title: values.title,
+      body: values.body
     },
     resolver: yupResolver<any>(validationSchema)
   });

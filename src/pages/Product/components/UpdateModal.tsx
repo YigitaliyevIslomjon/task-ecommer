@@ -10,24 +10,22 @@ import Spacer from '@/components/Spacer';
 
 import Form from './Form';
 
-import classes from './UserCreateModal.module.scss';
-
 interface IProps {
   id: string;
   onClose: () => void;
   isOpen: boolean;
 }
 
-const UserUpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
+const UpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
   const { item, isFetched } = useSingle({ id });
 
   return (
     <>
       <Modal width={1000} title="Update User" open={isOpen} onOk={onClose} onCancel={onClose} footer={false}>
         {!isFetched ? (
-          <div>...loding</div>
+          <Spinner spinning={!isFetched} />
         ) : (
-          <div className={classes.wrapper}>
+          <>
             <Spacer size={24} />
             <UpdateForm
               id={id}
@@ -39,7 +37,7 @@ const UserUpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
             >
               {({ formState }) => {
                 return (
-                  <div className={classes.content}>
+                  <div>
                     <Spinner spinning={formState.isSubmitSuccessful}>
                       <Form />
                       <Spacer size={30} />
@@ -58,11 +56,11 @@ const UserUpdateModal: React.FC<IProps> = ({ onClose, isOpen, id }) => {
                 );
               }}
             </UpdateForm>
-          </div>
+          </>
         )}
       </Modal>
     </>
   );
 };
 
-export default UserUpdateModal;
+export default UpdateModal;

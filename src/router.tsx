@@ -8,6 +8,9 @@ import * as AuthModule from '@/modules/auth';
 import * as Layouts from '@/layouts';
 
 import Auth from '@/pages/Auth';
+import PostPage from '@/pages/Post';
+import ProductPage from '@/pages/Product';
+import TodoPage from '@/pages/Todo';
 import UserPage from '@/pages/User';
 
 const getRoutesData = (): RouteObject[] => [
@@ -48,8 +51,20 @@ const getRoutesData = (): RouteObject[] => [
     ),
     children: [
       {
-        index: true,
+        path: 'user',
         element: <UserPage />
+      },
+      {
+        path: 'post',
+        element: <PostPage />
+      },
+      {
+        path: 'product',
+        element: <ProductPage />
+      },
+      {
+        path: 'todos',
+        element: <TodoPage />
       }
     ]
   }

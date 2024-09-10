@@ -5,31 +5,36 @@ import type { UseFormReturn } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import * as Api from '../api.ts';
-import { LIST } from '../constants.ts';
-import * as Mappers from '../mappers.ts';
+import { useContext } from '@/modules/auth/context';
+
+import * as Api from '../api';
+import { LIST } from '../constants';
+import * as Mappers from '../mappers';
 import * as Types from '../types';
 
-interface FormValues extends Types.IForm.Update {}
+interface FormValues extends Types.IForm.Create {}
 
 interface IChildren extends UseFormReturn<FormValues> {}
 
 interface IProps {
-  id: string;
-  values: Types.IEntity.User;
   children: (props: IChildren) => React.ReactNode;
   className?: string;
   onError?: (error: string) => void;
   onSettled?: () => void;
-  onSuccess?: (value: Types.IEntity.User) => void;
+  onSuccess?: (value: Types.IEntity.Post) => void;
 }
 
-const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, onSuccess, onError, id }) => {
+const CreateForm: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
   const queryClient = useQueryClient();
-  const mutation = useMutation<Types.IEntity.User, string, FormValues, any>(
+  const {
+    state: { profile }
+  } = useContext();
+
+  const mutation = useMutation<Types.IEntity.Post, string, FormValues, any>(
     async values => {
-      const { data } = await Api.Update({ id, values });
-      return Mappers.User(data);
+      const { data } = await Api.Create({ values, userId: profile.id });
+
+      return Mappers.Post(data);
     },
     {
       onSuccess: data => {
@@ -45,21 +50,23 @@ const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, 
 
   const validationSchema = yup
     .object({
-      firstName: yup.string().required(),
-      lastName: yup.string().required()
+      title: yup.string().required(),
+      body: yup.string().required()
     })
     .required();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      firstName: values.firstName,
-      lastName: values.lastName
+      title: '',
+      body: ''
     },
-    resolver: yupResolver<any>(validationSchema)
+    resolver: yupResolver<FormValues>(validationSchema)
   });
 
   const onSubmit = form.handleSubmit(values => {
-    mutation.mutate(values);
+    mutation.mutate(values, {
+      onSettled: () => form.reset()
+    });
   });
 
   return (
@@ -71,4 +78,4 @@ const UpdateForm: React.FC<IProps> = ({ children, values, className, onSettled, 
   );
 };
 
-export default UpdateForm;
+export default CreateForm;

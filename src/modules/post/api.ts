@@ -4,22 +4,26 @@ import { http } from '@/common/services';
 
 import * as Types from './types';
 
-export const Create = ({ values }: { values: Types.IForm.Create }): AxiosPromise<Types.IApi.Single.Response> =>
-  http.request.post(`users/add`, {
-    ...values
+export const Create = ({
+  values,
+  userId
+}: {
+  values: Types.IForm.Create;
+  userId: string;
+}): AxiosPromise<Types.IApi.Single.Response> =>
+  http.request.post(`posts/add`, {
+    ...values,
+    userId
   });
 
 export const Single = ({ id }: { id: string }): AxiosPromise<Types.IApi.Single.Response> =>
-  http.request.get(`/user/${id}`);
+  http.request.get(`/post/${id}`);
 
 export const List = ({ params }: { params: Types.IApi.List.Params }): AxiosPromise<Types.IApi.List.Response> =>
-  http.request.get('/users', { params });
+  http.request.get('/posts', { params });
 
 export const SearchList = ({ params }: { params: Types.IApi.List.Params }): AxiosPromise<Types.IApi.List.Response> =>
-  http.request.get('/users/search', { params });
-
-export const FilterList = ({ params }: { params: Types.IApi.List.Params }): AxiosPromise<Types.IApi.List.Response> =>
-  http.request.get('/users/filter', { params });
+  http.request.get('/posts/search', { params });
 
 export const Update = ({
   id,
@@ -28,9 +32,9 @@ export const Update = ({
   id: string;
   values: Types.IForm.Update;
 }): AxiosPromise<Types.IApi.Single.Response> =>
-  http.request.put(`user/${id}`, {
+  http.request.put(`/post/${id}`, {
     ...values
   });
 
 export const Delete = ({ id }: { id: string }): AxiosPromise<Types.IApi.Single.Response> =>
-  http.request.delete(`/user/${id}`);
+  http.request.delete(`/post/${id}`);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -9,12 +9,15 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 
+import { UploadRectangle } from '@/components/Icon/list/outline';
+
 import styles from './MainLayout.module.scss';
 
 const { Header, Sider, Content } = Layout;
 
 const Main: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
@@ -32,22 +35,54 @@ const Main: React.FC = () => {
               {
                 key: '1',
                 icon: <UserOutlined />,
-                label: 'User'
+                label: (
+                  <div
+                    onClick={() => {
+                      navigate('/user');
+                    }}
+                  >
+                    User
+                  </div>
+                )
               },
               {
                 key: '2',
                 icon: <VideoCameraOutlined />,
-                label: 'Post'
+                label: (
+                  <div
+                    onClick={() => {
+                      navigate('/post');
+                    }}
+                  >
+                    Post
+                  </div>
+                )
               },
               {
                 key: '3',
                 icon: <UploadOutlined />,
-                label: 'Product'
+                label: (
+                  <div
+                    onClick={() => {
+                      navigate('/product');
+                    }}
+                  >
+                    Product
+                  </div>
+                )
               },
               {
                 key: '4',
-                icon: <UploadOutlined />,
-                label: 'Todos'
+                icon: <UploadRectangle />,
+                label: (
+                  <div
+                    onClick={() => {
+                      navigate('/todos');
+                    }}
+                  >
+                    Todos
+                  </div>
+                )
               }
             ]}
           />

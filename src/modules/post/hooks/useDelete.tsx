@@ -8,11 +8,11 @@ import * as Types from '../types.ts';
 const useDelete = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Types.IEntity.User, string, Types.IQuery.Delete, any>(
+  return useMutation<Types.IEntity.Post, string, Types.IQuery.Delete, any>(
     async ({ id }) => {
       const { data } = await Api.Delete({ id });
 
-      return Mappers.User(data);
+      return Mappers.Post(data);
     },
     {
       onSuccess: () => {
