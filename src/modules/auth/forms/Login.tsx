@@ -49,7 +49,7 @@ const LoginForm: React.FC<IProps> = ({ children, onSettled, onSuccess, className
           accessToken: data.accessToken,
           refreshToken: data.refreshToken
         });
-        navigate('/user');
+        navigate('/');
       },
       onError: error => {
         message.success(`${error?.response?.data?.message}`);

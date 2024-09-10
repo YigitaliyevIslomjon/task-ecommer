@@ -19,6 +19,18 @@ const { Header, Sider, Content } = Layout;
 const Main: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  let ativeMenuKey = '1';
+
+  if (window.location.pathname == '/') {
+    ativeMenuKey = '1';
+  } else if (window.location.pathname == '/post') {
+    ativeMenuKey = '2';
+  } else if (window.location.pathname == '/product') {
+    ativeMenuKey = '3';
+  } else if (window.location.pathname == '/todo') {
+    ativeMenuKey = '4';
+  }
+
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();
@@ -31,7 +43,7 @@ const Main: React.FC = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[ativeMenuKey]}
             items={[
               {
                 key: '1',
@@ -39,7 +51,7 @@ const Main: React.FC = () => {
                 label: (
                   <div
                     onClick={() => {
-                      navigate('/user');
+                      navigate('/');
                     }}
                   >
                     User

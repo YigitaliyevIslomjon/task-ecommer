@@ -14,12 +14,6 @@ import classes from './AuthPage.module.scss';
 const Auth: React.FC = () => {
   const navigate = useNavigate();
 
-  //   const { isFetched, fetchStatus } = useLogin();
-
-  //   if (!isFetched && fetchStatus === 'fetching') {
-  //     return <Splash />;
-  //   }
-
   return (
     <div className={classes.wrapper}>
       <Spacer size={24} />

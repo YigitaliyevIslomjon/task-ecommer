@@ -35,7 +35,7 @@ const getRoutesData = (): RouteObject[] => [
     ),
     children: [
       {
-        path: 'user',
+        index: true,
         async lazy() {
           const UserPage = await import('@/pages/User');
           return { Component: UserPage.default };
