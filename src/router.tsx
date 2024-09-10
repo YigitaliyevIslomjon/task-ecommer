@@ -17,24 +17,10 @@ const getRoutesData = (): RouteObject[] => [
   {
     path: '/auth',
     element: (
-      <QueryParamProvider
-        adapter={ReactRouter6Adapter}
-        options={{
-          searchStringToObject: queryString.parse,
-          objectToSearchString: queryString.stringify
-        }}
-      >
-        <AuthModule.Containers.Auth>
-          <Layouts.Auth />
-        </AuthModule.Containers.Auth>
-      </QueryParamProvider>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Auth />
-      }
-    ]
+      <AuthModule.Containers.CheckAuth>
+        <Auth />
+      </AuthModule.Containers.CheckAuth>
+    )
   },
   {
     path: '/',
@@ -46,7 +32,9 @@ const getRoutesData = (): RouteObject[] => [
           objectToSearchString: queryString.stringify
         }}
       >
-        <Layouts.Main />
+        <AuthModule.Containers.CheckAuthMain>
+          <Layouts.Main />
+        </AuthModule.Containers.CheckAuthMain>
       </QueryParamProvider>
     ),
     children: [
@@ -65,6 +53,10 @@ const getRoutesData = (): RouteObject[] => [
       {
         path: 'todos',
         element: <TodoPage />
+      },
+      {
+        path: '/*',
+        element: <div>not found page</div>
       }
     ]
   }

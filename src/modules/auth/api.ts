@@ -2,9 +2,9 @@ import { AxiosPromise } from 'axios';
 
 import config from '@/config';
 
-import { http, storage } from '@/common/services';
-
 import * as Types from './types';
+
+import { http, storage } from '@/services';
 
 export const Login = ({ username, password }: { username: string; password: string }): AxiosPromise<any> =>
   http.pureRequest.post(`/auth/login`, {

@@ -1,10 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
 
-import CheckCircle from '@/components/Icon/list/outline/CheckCircle.tsx';
-import Warning from '@/components/Icon/list/outline/Warning.tsx';
-import WarningError from '@/components/Icon/list/outline/WarningError.tsx';
-
 import { LabelProps } from './types';
 
 import classes from './Input.module.scss';
@@ -26,12 +22,6 @@ const Label: React.FC<LabelProps> = ({
   onIconSuffix,
   iconSuffixStyle
 }) => {
-  const icons = {
-    error: <Warning color={'red'} width={24} height={24} className={classes.iconError} />,
-    warning: <WarningError color={'orange'} width={24} height={24} className={classes.iconWarning} />,
-    success: <CheckCircle color={'green'} width={24} height={24} className={classes.iconSuccess} />
-  };
-
   return (
     <div
       className={cx(
@@ -64,8 +54,6 @@ const Label: React.FC<LabelProps> = ({
               {iconSuffix}
             </div>
           )}
-
-          {!!state && state !== 'default' && <div className={classes.icon}>{icons[state]}</div>}
         </div>
       </label>
 

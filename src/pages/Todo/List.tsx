@@ -8,11 +8,10 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 import { useList } from '@/modules/todo/hooks';
 import useDelete from '@/modules/todo/hooks/useDelete';
 
-import { GenericTable } from '@/containers/Table';
-
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
 import Spacer from '@/components/Spacer';
+import { GenericTable } from '@/components/Table';
 
 import TodoCreateModal from './components/CreateModal';
 import TodoUpdateModal from './components/UpdateModal';

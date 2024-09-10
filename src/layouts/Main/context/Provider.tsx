@@ -2,10 +2,10 @@ import React, { useCallback, useState } from 'react';
 
 import config from '@/config.ts';
 
-import { storage } from '@/common/services';
-
 import Context, { initialState } from './context';
 import * as Types from './types';
+
+import { storage } from '@/services';
 
 type ChildrenType = (value: Types.Value) => React.ReactNode;
 

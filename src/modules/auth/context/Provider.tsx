@@ -28,10 +28,6 @@ const Provider: React.FC<IChildren> = ({ children }) => {
 
   const setIsFetched = useCallback((isFetched: boolean) => setState(state => ({ ...state, isFetched })), [setState]);
 
-  const setTheme = useCallback((theme: Types.IEntity.Theme) => setState(state => ({ ...state, theme })), [setState]);
-
-  // if (import.meta.env.DEV) console.log('AuthContext => ', state);
-
   return (
     <Context.Provider
       value={{
@@ -39,7 +35,6 @@ const Provider: React.FC<IChildren> = ({ children }) => {
           setIsAuthenticated,
           setIsFetched,
           setProfile,
-          setTheme,
           setTokens
         },
         state

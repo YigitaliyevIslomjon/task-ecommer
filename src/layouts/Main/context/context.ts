@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import config from '@/config';
 
-import { storage } from '@/common/services';
+import { storage } from '@/services';
 
 import * as Types from './types';
 

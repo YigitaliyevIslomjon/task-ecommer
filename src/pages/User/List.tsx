@@ -8,7 +8,7 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 import { useList } from '@/modules/user/hooks';
 import useDelete from '@/modules/user/hooks/useDelete';
 
-import { GenericTable } from '@/containers/Table';
+import { GenericTable } from '@/components/Table';
 
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';

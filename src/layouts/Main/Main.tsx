@@ -4,12 +4,12 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
+  UserAddOutlined,
   UserOutlined,
   VideoCameraOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 
-import { UploadRectangle } from '@/components/Icon/list/outline';
 import Spacer from '@/components/Spacer';
 
 import styles from './MainLayout.module.scss';
@@ -74,7 +74,7 @@ const Main: React.FC = () => {
               },
               {
                 key: '4',
-                icon: <UploadRectangle />,
+                icon: <UserAddOutlined />,
                 label: (
                   <div
                     onClick={() => {

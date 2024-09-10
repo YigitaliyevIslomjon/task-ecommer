@@ -8,11 +8,10 @@ import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query
 import { useList } from '@/modules/post/hooks';
 import useDelete from '@/modules/post/hooks/useDelete';
 
-import { GenericTable } from '@/containers/Table';
-
 import Header from '@/components/Header';
 import Pagenation from '@/components/Pagenation';
 import Spacer from '@/components/Spacer';
+import { GenericTable } from '@/components/Table';
 
 import PostCreateModal from './components/CreateModal';
 import PostUpdateModal from './components/UpdateModal';

@@ -1,10 +1,11 @@
 import React, { Suspense, useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import * as AccessManager from '@/modules/accessManager';
 import * as AuthModule from '@/modules/auth';
 
 import Splash from '@/components/Splash';
+
+import getRoutesData from './router';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const App: React.FC = () => {
 };
 
 const ApplicationRouter = () => {
-  const routes = AccessManager.Hooks.useRoutes();
+  const routes = getRoutesData();
 
   const router = useMemo(() => {
     return createBrowserRouter(routes);

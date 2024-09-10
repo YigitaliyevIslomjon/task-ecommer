@@ -1,8 +1,8 @@
 import { AxiosPromise } from 'axios';
 
-import { http } from '@/common/services';
-
 import * as Types from './types';
+
+import { http } from '@/services';
 
 export const Create = ({
   values,

@@ -2,17 +2,15 @@ import { createContext } from 'react';
 
 import config from '@/config';
 
-import { storage } from '@/common/services';
-
+import * as Mappers from '../mappers';
 import * as Types from '../types';
+
+import { storage } from '@/services';
 
 export const initialState: Types.IContext.State = {
   isAuthenticated: !!storage.local.get(config.api.accessTokenKey),
   isFetched: false,
-  profile: {
-    id: '1'
-  },
-  theme: storage.local.get('theme') || 'light',
+  profile: Mappers.Profile(),
   tokens: {
     accessToken: storage.local.get(config.api.accessTokenKey) || '',
     refreshToken: storage.local.get(config.api.refreshTokenKey) || ''
@@ -24,7 +22,6 @@ const context = createContext<Types.IContext.Value>({
     setIsAuthenticated: () => {},
     setIsFetched: () => {},
     setProfile: () => {},
-    setTheme: () => {},
     setTokens: () => {}
   },
   state: initialState

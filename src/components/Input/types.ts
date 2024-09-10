@@ -28,26 +28,3 @@ export interface TextInputProps extends Omit<LabelProps, 'children'> {
   onChange?: (e: any) => void;
   onBlur?: (e: any) => void;
 }
-
-export enum MASK_TYPE {
-  TEXT = 'TEXT',
-  ONLY_TEXT = 'ONLY_TEXT',
-  NUMBER = 'NUMBER',
-  EMAIL = 'EMAIL'
-}
-
-export interface MaskInputProp extends Omit<TextInputProps, 'type'> {
-  mask: string;
-  maskType?: MASK_TYPE;
-  unmask?: boolean;
-  lazy?: boolean;
-  placeholderChar?: string;
-  [key: string]: any;
-}
-
-export interface AmountInputProps extends Omit<TextInputProps, 'type'> {
-  valuePrefix?: string;
-  valueSuffix?: string;
-  min?: number;
-  max?: number;
-}
