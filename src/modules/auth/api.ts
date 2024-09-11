@@ -21,8 +21,3 @@ export const ProfileFromAuthLayout = (): AxiosPromise<Types.IApi.Profile.Respons
       Authorization: `${storage.local.get(config.api.accessTokenKey)}`
     }
   });
-
-export const Logout = (): AxiosPromise<any> =>
-  http.pureRequest.get(`/api/user/v1/token/logout`, {
-    params: { accessToken: storage.local.get(config.api.accessTokenKey) }
-  });
