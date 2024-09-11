@@ -5,7 +5,7 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
-import { Filters, SORT_ORDER, Sorts } from '@/common/types';
+import { Filters, SORT_ORDER, Sorts, SortSingle } from '@/common/types';
 
 import { useList } from '@/modules/post/hooks';
 import useDelete from '@/modules/post/hooks/useDelete';
@@ -59,6 +59,8 @@ const List: React.FC<IProps> = () => {
   };
 
   const handleTableChange = (filters: Filter, sorter: Sort) => {
+    sorter = sorter as SortSingle<Types.IEntity.Post>;
+
     if (sorter.field == 'title') {
       setQuery({
         sortBy: sorter.order == 'ascend' || sorter.order == 'descend' ? sorter.field : undefined,
@@ -84,7 +86,7 @@ const List: React.FC<IProps> = () => {
       title: 'title',
       dataIndex: 'title',
       key: 'title',
-        sorter: true,
+      sorter: true,
       sortDirections: ['descend', 'ascend'],
       sortOrder: query.order === SORT_ORDER.ASC ? 'ascend' : query.order === SORT_ORDER.DESC ? 'descend' : null
     },
