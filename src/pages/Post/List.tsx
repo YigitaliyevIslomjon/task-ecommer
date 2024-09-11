@@ -84,7 +84,7 @@ const List: React.FC<IProps> = () => {
       title: 'title',
       dataIndex: 'title',
       key: 'title',
-      sorter: true,
+        sorter: true,
       sortDirections: ['descend', 'ascend'],
       sortOrder: query.order === SORT_ORDER.ASC ? 'ascend' : query.order === SORT_ORDER.DESC ? 'descend' : null
     },
