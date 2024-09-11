@@ -16,7 +16,7 @@ const Header: React.FC<IProps> = ({ onClick, onSearch }) => {
           <Input onChange={e => onSearch && onSearch(e.currentTarget.value)} placeholder="search..." size="sm" />
         </Col>
         <Col>
-          <Button onClick={onClick} htmlType="button">
+          <Button onClick={onClick} htmlType="button" type="primary">
             Create
           </Button>
         </Col>

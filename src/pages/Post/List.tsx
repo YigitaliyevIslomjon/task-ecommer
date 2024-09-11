@@ -5,6 +5,8 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
+import { Filters, SORT_ORDER, Sorts } from '@/common/types';
+
 import { useList } from '@/modules/post/hooks';
 import useDelete from '@/modules/post/hooks/useDelete';
 import * as Types from '@/modules/post/types';
@@ -20,6 +22,8 @@ import PostUpdateModal from './components/UpdateModal';
 import classes from './PostPage.module.scss';
 
 interface IProps {}
+type Filter = Filters<Types.IEntity.Post>;
+type Sort = Sorts<Types.IEntity.Post>;
 
 const List: React.FC<IProps> = () => {
   const [postCreateModal, setPostCreateModal] = useState(false);
@@ -54,6 +58,15 @@ const List: React.FC<IProps> = () => {
     message.error('cenceled');
   };
 
+  const handleTableChange = (filters: Filter, sorter: Sort) => {
+    if (sorter.field == 'title') {
+      setQuery({
+        sortBy: sorter.order == 'ascend' || sorter.order == 'descend' ? sorter.field : undefined,
+        order: sorter.order === 'ascend' ? SORT_ORDER.ASC : sorter.order === 'descend' ? SORT_ORDER.DESC : undefined
+      });
+    }
+  };
+
   // Debounce the search function
   const handleSearch = useCallback(
     debounce({ delay: 300 }, value => {
@@ -70,7 +83,10 @@ const List: React.FC<IProps> = () => {
     {
       title: 'title',
       dataIndex: 'title',
-      key: 'title'
+      key: 'title',
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
+      sortOrder: query.order === SORT_ORDER.ASC ? 'ascend' : query.order === SORT_ORDER.DESC ? 'descend' : null
     },
     {
       title: 'body',
@@ -125,7 +141,7 @@ const List: React.FC<IProps> = () => {
         }}
       />
       <Spacer size={6} />
-      <GenericTable columns={columns} data={items} loading={isFetching} />
+      <GenericTable columns={columns} data={items} loading={isFetching} onChange={handleTableChange} />
       <Spacer size={6} />
       <Pagenation
         onShowSizeChange={(currentPage, PageSize) => {

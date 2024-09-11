@@ -5,6 +5,8 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
+import { Filters, SORT_ORDER, Sorts } from '@/common/types';
+
 import { useList } from '@/modules/user/hooks';
 import useDelete from '@/modules/user/hooks/useDelete';
 import * as Types from '@/modules/user/types';
@@ -20,10 +22,13 @@ import UserUpdateModal from './components/UpdateModal';
 import classes from './UserPage.module.scss';
 
 interface IProps {}
+type Filter = Filters<Types.IEntity.User>;
+type Sort = Sorts<Types.IEntity.User>;
 
 const List: React.FC<IProps> = () => {
   const [userCreateModal, setUserCreateModal] = useState(false);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
+
   const [id, setId] = useState('');
 
   const [query, setQuery] = useQueryParams({
@@ -60,7 +65,7 @@ const List: React.FC<IProps> = () => {
 
   // Debounce the search function
   const handleSearch = useCallback(
-    debounce({ delay: 300 }, value => {
+    debounce({ delay: 500 }, value => {
       if (!value) {
         setQuery({ q: undefined });
       } else {
@@ -70,11 +75,30 @@ const List: React.FC<IProps> = () => {
     []
   );
 
+  const handleTableChange = (filters: Filter, sorter: Sort) => {
+    if (!filters.firstName?.length) {
+      setQuery({
+        key: undefined,
+        value: undefined
+      });
+    }
+    if (sorter.field == 'firstName') {
+      setQuery({
+        sortBy: sorter.order == 'ascend' || sorter.order == 'descend' ? sorter.field : undefined,
+        order: sorter.order === 'ascend' ? SORT_ORDER.ASC : sorter.order === 'descend' ? SORT_ORDER.DESC : undefined
+      });
+    }
+  };
+
   const columns: TableProps<Types.IEntity.User>['columns'] = [
     {
-      title: 'Name',
+      title: 'name',
       dataIndex: 'firstName',
       key: 'firstName',
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
+      sortOrder: query.order === SORT_ORDER.ASC ? 'ascend' : query.order === SORT_ORDER.DESC ? 'descend' : null,
+      filteredValue: query.key == 'firstName' && query.value ? [query.value] : null,
       filters: [
         {
           text: 'Michael',
@@ -82,7 +106,6 @@ const List: React.FC<IProps> = () => {
         }
       ],
       onFilter: (value, _) => {
-        console.log(value, 'f');
         setQuery({
           key: 'firstName',
           value: value as string
@@ -93,38 +116,12 @@ const List: React.FC<IProps> = () => {
     {
       title: 'Age',
       dataIndex: 'age',
-      key: 'age',
-      filters: [
-        {
-          text: '24',
-          value: '24'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'age',
-          value: value as string
-        });
-        return true;
-      }
+      key: 'age'
     },
     {
       title: 'eyeColor',
       dataIndex: 'eyeColor',
-      key: 'eyeColor',
-      filters: [
-        {
-          text: 'Red',
-          value: 'Red'
-        }
-      ],
-      onFilter: (value, _) => {
-        setQuery({
-          key: 'eyeColor',
-          value: value as string
-        });
-        return true;
-      }
+      key: 'eyeColor'
     },
     {
       title: 'Action',
@@ -169,7 +166,7 @@ const List: React.FC<IProps> = () => {
         }}
       />
       <Spacer size={6} />
-      <GenericTable columns={columns} data={items} loading={isFetching} />
+      <GenericTable columns={columns} data={items} loading={isFetching} onChange={handleTableChange} />
       <Spacer size={6} />
       <Pagenation
         onShowSizeChange={(currentPage, PageSize) => {

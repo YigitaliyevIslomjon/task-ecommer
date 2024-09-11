@@ -5,6 +5,8 @@ import { message, Popconfirm, PopconfirmProps, Space } from 'antd/lib';
 import { debounce } from 'radash';
 import { NumberParam, StringParam, useQueryParams, withDefault } from 'use-query-params';
 
+import { Filters, SORT_ORDER, Sorts } from '@/common/types';
+
 import { useList } from '@/modules/product/hooks';
 import useDelete from '@/modules/product/hooks/useDelete';
 import * as Types from '@/modules/product/types';
@@ -20,6 +22,8 @@ import ProductUpdateModal from './components/UpdateModal';
 import classes from './ProductPage.module.scss';
 
 interface IProps {}
+type Filter = Filters<Types.IEntity.Product>;
+type Sort = Sorts<Types.IEntity.Product>;
 
 const List: React.FC<IProps> = () => {
   const [productCreateModal, setProductCreateModal] = useState(false);
@@ -56,9 +60,18 @@ const List: React.FC<IProps> = () => {
     message.error('cenceled');
   };
 
+  const handleTableChange = (filters: Filter, sorter: Sort) => {
+    if (sorter.field == 'title') {
+      setQuery({
+        sortBy: sorter.order == 'ascend' || sorter.order == 'descend' ? sorter.field : undefined,
+        order: sorter.order === 'ascend' ? SORT_ORDER.ASC : sorter.order === 'descend' ? SORT_ORDER.DESC : undefined
+      });
+    }
+  };
+
   // Debounce the search function
   const handleSearch = useCallback(
-    debounce({ delay: 300 }, value => {
+    debounce({ delay: 500 }, value => {
       if (!value) {
         setQuery({ q: undefined });
       } else {
@@ -72,7 +85,10 @@ const List: React.FC<IProps> = () => {
     {
       title: 'title',
       dataIndex: 'title',
-      key: 'title'
+      key: 'title',
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
+      sortOrder: query.order === SORT_ORDER.ASC ? 'ascend' : query.order === SORT_ORDER.DESC ? 'descend' : null
     },
     {
       title: 'category',
@@ -127,7 +143,7 @@ const List: React.FC<IProps> = () => {
         }}
       />
       <Spacer size={6} />
-      <GenericTable columns={columns} data={items} loading={isFetching} />
+      <GenericTable columns={columns} data={items} loading={isFetching} onChange={handleTableChange} />
       <Spacer size={6} />
       <Pagenation
         onShowSizeChange={(currentPage, PageSize) => {
